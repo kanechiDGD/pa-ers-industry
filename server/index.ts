@@ -10,6 +10,10 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
+  app.get("/cron/ping", (_req, res) => {
+    res.status(200).send("OK");
+  });
+
   // Serve static files from dist/public in production
   const staticPath =
     process.env.NODE_ENV === "production"
