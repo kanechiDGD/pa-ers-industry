@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Message {
   id: string;
@@ -63,6 +64,7 @@ const startNewChat = (): { pin: string; conversation: Conversation } => {
 };
 
 export default function ChatSection() {
+  const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<"initial" | "chat" | "contact">("initial");
   const [pin, setPin] = useState<string>("");
@@ -77,6 +79,93 @@ export default function ChatSection() {
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const copy = {
+    en: {
+      heroTitle: "Have Questions?",
+      heroBullets: [
+        "Completely Free",
+        "100% Anonymous - No personal data required",
+        "No Commitment - Ask and get guidance",
+      ],
+      heroBody:
+        "Start an anonymous and confidential consultation. We will assign a PIN so you can continue the conversation anytime, from any device.",
+      heroCta: "Start Chat",
+      initialTitle: "Start Consultation",
+      initialBody: "Choose whether to start a new consultation or continue an existing one",
+      initialStart: "Start Chat",
+      initialOr: "OR",
+      pinPlaceholder: "Enter your 6-digit PIN",
+      pinContinue: "Continue with PIN",
+      contactTitle: "Contact Information",
+      contactBody: "Optional - Share your details so we can reach you more easily",
+      nameLabel: "Name",
+      namePlaceholder: "Your name",
+      emailLabel: "Email",
+      emailPlaceholder: "your@email.com",
+      phoneLabel: "Phone",
+      phonePlaceholder: "555-1234",
+      save: "Save",
+      skip: "Skip",
+      chatTitle: "Consultation Chat",
+      chatBody: "Write your questions and we will respond soon",
+      pinLabel: "Your PIN:",
+      noMessages: "No messages yet. Write your first question below.",
+      messagePlaceholder: "Write your question here...",
+      sendMessage: "Send Message",
+      saveContact: "Save Contact",
+      toasts: {
+        invalidPin: "Please enter a valid PIN",
+        pinNotFound: "PIN not found. Check and try again.",
+        pinCopied: "PIN copied to clipboard",
+        messageSent: "Message sent. You will receive a response soon.",
+        contactSaved: "Contact information saved",
+      },
+    },
+    es: {
+      heroTitle: "Tienes Preguntas?",
+      heroBullets: [
+        "Completamente Gratuito",
+        "100% Anonimo - No necesitas darnos tus datos",
+        "Sin Compromiso - Solo consulta y obten asesoramiento",
+      ],
+      heroBody:
+        "Inicia una consulta anonima y confidencial. Te asignaremos un PIN para que puedas continuar la conversacion en cualquier momento, desde cualquier dispositivo.",
+      heroCta: "Iniciar Chat",
+      initialTitle: "Iniciar Consulta",
+      initialBody: "Elige si quieres iniciar una nueva consulta o continuar con una existente",
+      initialStart: "Iniciar Chat",
+      initialOr: "O",
+      pinPlaceholder: "Ingresa tu PIN de 6 digitos",
+      pinContinue: "Continuar con PIN",
+      contactTitle: "Informacion de Contacto",
+      contactBody: "Opcional - Proporciona tus datos para que podamos contactarte mas facilmente",
+      nameLabel: "Nombre",
+      namePlaceholder: "Tu nombre",
+      emailLabel: "Email",
+      emailPlaceholder: "tu@email.com",
+      phoneLabel: "Telefono",
+      phonePlaceholder: "555-1234",
+      save: "Guardar",
+      skip: "Omitir",
+      chatTitle: "Chat de Consulta",
+      chatBody: "Escribe tus preguntas y te responderemos pronto",
+      pinLabel: "Tu PIN:",
+      noMessages: "No hay mensajes aun. Escribe tu primera pregunta abajo.",
+      messagePlaceholder: "Escribe tu pregunta aqui...",
+      sendMessage: "Enviar Mensaje",
+      saveContact: "Guardar Contacto",
+      toasts: {
+        invalidPin: "Por favor ingresa un PIN valido",
+        pinNotFound: "PIN no encontrado. Verifica e intenta nuevamente.",
+        pinCopied: "PIN copiado al portapapeles",
+        messageSent: "Mensaje enviado. Recibiras una respuesta pronto.",
+        contactSaved: "Informacion de contacto guardada",
+      },
+    },
+  };
+
+  const text = copy[language];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -96,7 +185,7 @@ export default function ChatSection() {
 
   const handleContinueWithPin = () => {
     if (!existingPin.trim()) {
-      toast.error("Por favor ingresa un PIN válido");
+      toast.error(text.toasts.invalidPin);
       return;
     }
     const conv = loadConversation(existingPin.trim());
@@ -105,14 +194,14 @@ export default function ChatSection() {
       setConversation(conv);
       setStep("chat");
     } else {
-      toast.error("PIN no encontrado. Verifica e intenta nuevamente.");
+      toast.error(text.toasts.pinNotFound);
     }
   };
 
   const copyPin = () => {
     navigator.clipboard.writeText(pin);
     setCopied(true);
-    toast.success("PIN copiado al portapapeles");
+    toast.success(text.toasts.pinCopied);
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -134,7 +223,7 @@ export default function ChatSection() {
     setConversation(updatedConv);
     saveConversation(updatedConv);
     setMessage("");
-    toast.success("Mensaje enviado. Recibirás una respuesta pronto.");
+    toast.success(text.toasts.messageSent);
   };
 
   const saveContactInformation = () => {
@@ -150,7 +239,7 @@ export default function ChatSection() {
     setConversation(updatedConv);
     saveConversation(updatedConv);
     setStep("chat");
-    toast.success("Información de contacto guardada");
+    toast.success(text.toasts.contactSaved);
   };
 
   if (!isOpen) {
@@ -161,24 +250,18 @@ export default function ChatSection() {
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent mb-6 shadow-lg">
               <MessageCircle className="w-12 h-12 text-white" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">¿Tienes Preguntas?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">{text.heroTitle}</h2>
             <div className="bg-white border-2 border-green-500 rounded-lg p-6 mb-6 shadow-md">
-              <p className="text-lg text-foreground mb-3 font-semibold text-green-700">
-                ✓ Completamente Gratuito
-              </p>
-              <p className="text-lg text-foreground mb-3 font-semibold text-green-700">
-                ✓ 100% Anónimo - No necesitas darnos tus datos
-              </p>
-              <p className="text-lg text-foreground font-semibold text-green-700">
-                ✓ Sin Compromiso - Solo consulta y obtén asesoramiento
-              </p>
+              {text.heroBullets.map((bullet) => (
+                <p key={bullet} className="text-lg text-foreground mb-3 font-semibold text-green-700">
+                  OK - {bullet}
+                </p>
+              ))}
             </div>
-            <p className="text-lg text-muted-foreground mb-8">
-              Inicia una consulta anónima y confidencial. Te asignaremos un PIN para que puedas continuar la conversación en cualquier momento, desde cualquier dispositivo.
-            </p>
+            <p className="text-lg text-muted-foreground mb-8">{text.heroBody}</p>
             <Button size="lg" onClick={() => setIsOpen(true)} className="w-full sm:w-auto text-lg px-8 py-6">
               <MessageCircle className="mr-2 h-6 w-6" />
-              Iniciar Chat
+              {text.heroCta}
             </Button>
           </div>
         </div>
@@ -191,32 +274,30 @@ export default function ChatSection() {
       <div className="flex flex-col items-center justify-center py-16 px-4">
         <Card className="max-w-md w-full">
           <CardHeader>
-            <CardTitle>Iniciar Consulta</CardTitle>
-            <CardDescription>
-              Elige si quieres iniciar una nueva consulta o continuar con una existente
-            </CardDescription>
+            <CardTitle>{text.initialTitle}</CardTitle>
+            <CardDescription>{text.initialBody}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Button size="lg" onClick={handleStartNewChat} className="w-full bg-green-600 hover:bg-green-700">
-              Iniciar Chat
+              {text.initialStart}
             </Button>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">O</span>
+                <span className="bg-card px-2 text-muted-foreground">{text.initialOr}</span>
               </div>
             </div>
             <div className="space-y-2">
               <Input
-                placeholder="Ingresa tu PIN de 6 dígitos"
+                placeholder={text.pinPlaceholder}
                 value={existingPin}
                 onChange={(e) => setExistingPin(e.target.value)}
                 maxLength={6}
               />
               <Button variant="outline" onClick={handleContinueWithPin} className="w-full">
-                Continuar con PIN
+                {text.pinContinue}
               </Button>
             </div>
           </CardContent>
@@ -230,44 +311,42 @@ export default function ChatSection() {
       <div className="flex flex-col items-center justify-center py-16 px-4">
         <Card className="max-w-md w-full">
           <CardHeader>
-            <CardTitle>Información de Contacto</CardTitle>
-            <CardDescription>
-              Opcional - Proporciona tus datos para que podamos contactarte más fácilmente
-            </CardDescription>
+            <CardTitle>{text.contactTitle}</CardTitle>
+            <CardDescription>{text.contactBody}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Nombre</label>
+              <label className="text-sm font-medium">{text.nameLabel}</label>
               <Input
-                placeholder="Tu nombre"
+                placeholder={text.namePlaceholder}
                 value={contactInfo.name}
                 onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Email</label>
+              <label className="text-sm font-medium">{text.emailLabel}</label>
               <Input
                 type="email"
-                placeholder="tu@email.com"
+                placeholder={text.emailPlaceholder}
                 value={contactInfo.email}
                 onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Teléfono</label>
+              <label className="text-sm font-medium">{text.phoneLabel}</label>
               <Input
                 type="tel"
-                placeholder="555-1234"
+                placeholder={text.phonePlaceholder}
                 value={contactInfo.phone}
                 onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
               />
             </div>
             <div className="flex gap-2">
               <Button onClick={saveContactInformation} className="flex-1">
-                Guardar
+                {text.save}
               </Button>
               <Button variant="outline" onClick={() => setStep("chat")} className="flex-1">
-                Omitir
+                {text.skip}
               </Button>
             </div>
           </CardContent>
@@ -283,13 +362,13 @@ export default function ChatSection() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Chat de Consulta</CardTitle>
-              <CardDescription>Escribe tus preguntas y te responderemos pronto</CardDescription>
+              <CardTitle>{text.chatTitle}</CardTitle>
+              <CardDescription>{text.chatBody}</CardDescription>
             </div>
           </div>
           <div className="flex items-center gap-2 mt-4 p-3 bg-primary/10 rounded-lg">
             <div className="flex-1">
-              <p className="text-sm font-medium text-muted-foreground">Tu PIN:</p>
+              <p className="text-sm font-medium text-muted-foreground">{text.pinLabel}</p>
               <p className="text-lg font-mono font-bold text-primary">{pin}</p>
             </div>
             <Button size="sm" variant="outline" onClick={copyPin}>
@@ -301,9 +380,7 @@ export default function ChatSection() {
           {/* Messages Area */}
           <div className="h-64 overflow-y-auto space-y-3 p-4 bg-muted/30 rounded-lg">
             {conversation?.messages.length === 0 ? (
-              <p className="text-center text-muted-foreground text-sm">
-                No hay mensajes aún. Escribe tu primera pregunta abajo.
-              </p>
+              <p className="text-center text-muted-foreground text-sm">{text.noMessages}</p>
             ) : (
               conversation?.messages.map((msg) => (
                 <div
@@ -334,7 +411,7 @@ export default function ChatSection() {
           {/* Message Input */}
           <div className="space-y-2">
             <Textarea
-              placeholder="Escribe tu pregunta aquí..."
+              placeholder={text.messagePlaceholder}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               rows={3}
@@ -347,10 +424,10 @@ export default function ChatSection() {
             />
             <div className="flex gap-2">
               <Button onClick={sendMessage} disabled={!message.trim()} className="flex-1">
-                Enviar Mensaje
+                {text.sendMessage}
               </Button>
               <Button variant="outline" onClick={() => setStep("contact")}>
-                Guardar Contacto
+                {text.saveContact}
               </Button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import { Component, ReactNode } from "react";
+import { LanguageContext } from "@/contexts/LanguageContext";
 
 interface Props {
   children: ReactNode;
@@ -12,6 +13,9 @@ interface State {
 }
 
 class ErrorBoundary extends Component<Props, State> {
+  static contextType = LanguageContext;
+  declare context: React.ContextType<typeof LanguageContext>;
+
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -23,15 +27,26 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
+      const language = this.context?.language ?? "en";
+      const copy = {
+        en: {
+          title: "An unexpected error occurred.",
+          reload: "Reload Page",
+        },
+        es: {
+          title: "Ocurrio un error inesperado.",
+          reload: "Recargar Pagina",
+        },
+      } as const;
+
+      const text = copy[language];
+
       return (
         <div className="flex items-center justify-center min-h-screen p-8 bg-background">
           <div className="flex flex-col items-center w-full max-w-2xl p-8">
-            <AlertTriangle
-              size={48}
-              className="text-destructive mb-6 flex-shrink-0"
-            />
+            <AlertTriangle size={48} className="text-destructive mb-6 flex-shrink-0" />
 
-            <h2 className="text-xl mb-4">An unexpected error occurred.</h2>
+            <h2 className="text-xl mb-4">{text.title}</h2>
 
             <div className="p-4 w-full rounded bg-muted overflow-auto mb-6">
               <pre className="text-sm text-muted-foreground whitespace-break-spaces">
@@ -48,7 +63,7 @@ class ErrorBoundary extends Component<Props, State> {
               )}
             >
               <RotateCcw size={16} />
-              Reload Page
+              {text.reload}
             </button>
           </div>
         </div>

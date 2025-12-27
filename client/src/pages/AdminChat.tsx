@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import Header from "@/components/Header";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Message {
   id: string;
@@ -24,11 +25,53 @@ interface Conversation {
 }
 
 export default function AdminChat() {
+  const { language } = useLanguage();
   const [, navigate] = useLocation();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedPin, setSelectedPin] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const copy = {
+    en: {
+      conversations: "Conversations",
+      activeCount: (count: number) => `${count} active conversation${count !== 1 ? "s" : ""}`,
+      emptyConversations: "No conversations yet",
+      newBadge: "New",
+      messagesCount: (count: number) => `${count} message${count !== 1 ? "s" : ""}`,
+      noMessages: "No messages in this conversation",
+      clientInfo: {
+        name: "Name",
+        email: "Email",
+        phone: "Phone",
+      },
+      replyPlaceholder: "Write your reply...",
+      sendReply: "Send Reply",
+      selectConversation: "Select a conversation to view details",
+      logout: "Session closed",
+      replySent: "Reply sent to client",
+    },
+    es: {
+      conversations: "Conversaciones",
+      activeCount: (count: number) => `${count} conversacion${count !== 1 ? "es" : ""} activa${count !== 1 ? "s" : ""}`,
+      emptyConversations: "No hay conversaciones aun",
+      newBadge: "Nuevo",
+      messagesCount: (count: number) => `${count} mensaje${count !== 1 ? "s" : ""}`,
+      noMessages: "No hay mensajes en esta conversacion",
+      clientInfo: {
+        name: "Nombre",
+        email: "Email",
+        phone: "Telefono",
+      },
+      replyPlaceholder: "Escribe tu respuesta...",
+      sendReply: "Enviar Respuesta",
+      selectConversation: "Selecciona una conversacion para ver los detalles",
+      logout: "Sesion cerrada",
+      replySent: "Respuesta enviada al cliente",
+    },
+  };
+
+  const text = copy[language];
 
   // Check authentication
   useEffect(() => {
@@ -58,10 +101,8 @@ export default function AdminChat() {
 
     // Sort by most recent message
     convs.sort((a, b) => {
-      const aTime =
-        a.messages.length > 0 ? a.messages[a.messages.length - 1].timestamp.getTime() : 0;
-      const bTime =
-        b.messages.length > 0 ? b.messages[b.messages.length - 1].timestamp.getTime() : 0;
+      const aTime = a.messages.length > 0 ? a.messages[a.messages.length - 1].timestamp.getTime() : 0;
+      const bTime = b.messages.length > 0 ? b.messages[b.messages.length - 1].timestamp.getTime() : 0;
       return bTime - aTime;
     });
 
@@ -82,7 +123,7 @@ export default function AdminChat() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("admin_auth");
-    toast.success("Sesión cerrada");
+    toast.success(text.logout);
     navigate("/admin/login");
   };
 
@@ -107,7 +148,7 @@ export default function AdminChat() {
     localStorage.setItem(`chat_${selectedPin}`, JSON.stringify(updatedConv));
     setReplyText("");
     loadConversations();
-    toast.success("Respuesta enviada al cliente");
+    toast.success(text.replySent);
   };
 
   const selectedConversation = conversations.find((c) => c.pin === selectedPin);
@@ -127,17 +168,14 @@ export default function AdminChat() {
           {/* Conversations List */}
           <Card className="lg:col-span-1 overflow-hidden flex flex-col">
             <CardHeader>
-              <CardTitle>Conversaciones</CardTitle>
-              <CardDescription>
-                {conversations.length} conversación{conversations.length !== 1 ? "es" : ""} activa
-                {conversations.length !== 1 ? "s" : ""}
-              </CardDescription>
+              <CardTitle>{text.conversations}</CardTitle>
+              <CardDescription>{text.activeCount(conversations.length)}</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 overflow-y-auto space-y-2 p-4">
               {conversations.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   <MessageSquare className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p className="text-sm">No hay conversaciones aún</p>
+                  <p className="text-sm">{text.emptyConversations}</p>
                 </div>
               ) : (
                 conversations.map((conv) => (
@@ -145,9 +183,7 @@ export default function AdminChat() {
                     key={conv.pin}
                     onClick={() => setSelectedPin(conv.pin)}
                     className={`p-4 rounded-lg border cursor-pointer transition-colors ${
-                      selectedPin === conv.pin
-                        ? "bg-primary/10 border-primary"
-                        : "hover:bg-muted/50"
+                      selectedPin === conv.pin ? "bg-primary/10 border-primary" : "hover:bg-muted/50"
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
@@ -155,7 +191,7 @@ export default function AdminChat() {
                         <span className="font-mono font-bold text-sm">{conv.pin}</span>
                         {hasNewMessages(conv) && (
                           <Badge variant="destructive" className="text-xs">
-                            Nuevo
+                            {text.newBadge}
                           </Badge>
                         )}
                       </div>
@@ -191,10 +227,7 @@ export default function AdminChat() {
                   <div className="flex items-start justify-between">
                     <div>
                       <CardTitle>PIN: {selectedConversation.pin}</CardTitle>
-                      <CardDescription>
-                        {selectedConversation.messages.length} mensaje
-                        {selectedConversation.messages.length !== 1 ? "s" : ""}
-                      </CardDescription>
+                      <CardDescription>{text.messagesCount(selectedConversation.messages.length)}</CardDescription>
                     </div>
                   </div>
 
@@ -205,19 +238,19 @@ export default function AdminChat() {
                     <div className="mt-4 p-3 bg-muted/50 rounded-lg space-y-1 text-sm">
                       {selectedConversation.clientName && (
                         <p>
-                          <span className="font-medium">Nombre:</span>{" "}
+                          <span className="font-medium">{text.clientInfo.name}:</span>{" "}
                           {selectedConversation.clientName}
                         </p>
                       )}
                       {selectedConversation.clientEmail && (
                         <p>
-                          <span className="font-medium">Email:</span>{" "}
+                          <span className="font-medium">{text.clientInfo.email}:</span>{" "}
                           {selectedConversation.clientEmail}
                         </p>
                       )}
                       {selectedConversation.clientPhone && (
                         <p>
-                          <span className="font-medium">Teléfono:</span>{" "}
+                          <span className="font-medium">{text.clientInfo.phone}:</span>{" "}
                           {selectedConversation.clientPhone}
                         </p>
                       )}
@@ -228,15 +261,13 @@ export default function AdminChat() {
                 <CardContent className="flex-1 overflow-y-auto space-y-3 p-4">
                   {selectedConversation.messages.length === 0 ? (
                     <div className="text-center py-8 text-muted-foreground">
-                      <p className="text-sm">No hay mensajes en esta conversación</p>
+                      <p className="text-sm">{text.noMessages}</p>
                     </div>
                   ) : (
                     selectedConversation.messages.map((msg) => (
                       <div
                         key={msg.id}
-                        className={`flex ${
-                          msg.sender === "admin" ? "justify-start" : "justify-end"
-                        }`}
+                        className={`flex ${msg.sender === "admin" ? "justify-start" : "justify-end"}`}
                       >
                         <div
                           className={`max-w-[80%] rounded-lg p-3 ${
@@ -260,7 +291,7 @@ export default function AdminChat() {
                 <div className="border-t p-4">
                   <div className="space-y-2">
                     <Textarea
-                      placeholder="Escribe tu respuesta..."
+                      placeholder={text.replyPlaceholder}
                       value={replyText}
                       onChange={(e) => setReplyText(e.target.value)}
                       rows={3}
@@ -273,7 +304,7 @@ export default function AdminChat() {
                     />
                     <Button onClick={sendReply} disabled={!replyText.trim()} className="w-full">
                       <Send className="h-4 w-4 mr-2" />
-                      Enviar Respuesta
+                      {text.sendReply}
                     </Button>
                   </div>
                 </div>
@@ -282,7 +313,7 @@ export default function AdminChat() {
               <div className="flex-1 flex items-center justify-center text-muted-foreground">
                 <div className="text-center">
                   <MessageSquare className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                  <p>Selecciona una conversación para ver los detalles</p>
+                  <p>{text.selectConversation}</p>
                 </div>
               </div>
             )}

@@ -5,15 +5,50 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ADMIN_USERNAME = "andres";
 const ADMIN_PASSWORD = "1234";
 
 export default function AdminLogin() {
+  const { language } = useLanguage();
   const [, navigate] = useLocation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const copy = {
+    en: {
+      title: "Admin Panel",
+      subtitle: "Restricted access. Authorized personnel only.",
+      username: "Username",
+      usernamePlaceholder: "Enter your username",
+      password: "Password",
+      passwordPlaceholder: "Enter your password",
+      loggingIn: "Logging in...",
+      login: "Log In",
+      success: "Login successful",
+      error: "Invalid credentials. Try again.",
+      warning:
+        "This panel is for authorized administrators only. Unauthorized access is prohibited.",
+    },
+    es: {
+      title: "Panel de Administracion",
+      subtitle: "Acceso restringido. Solo personal autorizado.",
+      username: "Usuario",
+      usernamePlaceholder: "Ingresa tu usuario",
+      password: "Contrasena",
+      passwordPlaceholder: "Ingresa tu contrasena",
+      loggingIn: "Ingresando...",
+      login: "Ingresar",
+      success: "Inicio de sesion exitoso",
+      error: "Credenciales incorrectas. Intenta nuevamente.",
+      warning:
+        "Este panel es solo para administradores autorizados. El acceso no autorizado esta prohibido.",
+    },
+  };
+
+  const text = copy[language];
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,10 +58,10 @@ export default function AdminLogin() {
     setTimeout(() => {
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         sessionStorage.setItem("admin_auth", "true");
-        toast.success("Inicio de sesión exitoso");
+        toast.success(text.success);
         navigate("/admin/chat");
       } else {
-        toast.error("Credenciales incorrectas. Intenta nuevamente.");
+        toast.error(text.error);
       }
       setIsLoading(false);
     }, 500);
@@ -41,21 +76,19 @@ export default function AdminLogin() {
               <Lock className="h-8 w-8 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Panel de Administración</CardTitle>
-          <CardDescription>
-            Acceso restringido. Solo personal autorizado.
-          </CardDescription>
+          <CardTitle className="text-2xl">{text.title}</CardTitle>
+          <CardDescription>{text.subtitle}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="username" className="text-sm font-medium">
-                Usuario
+                {text.username}
               </label>
               <Input
                 id="username"
                 type="text"
-                placeholder="Ingresa tu usuario"
+                placeholder={text.usernamePlaceholder}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -65,12 +98,12 @@ export default function AdminLogin() {
 
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium">
-                Contraseña
+                {text.password}
               </label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Ingresa tu contraseña"
+                placeholder={text.passwordPlaceholder}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -79,15 +112,12 @@ export default function AdminLogin() {
             </div>
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Ingresando..." : "Ingresar"}
+              {isLoading ? text.loggingIn : text.login}
             </Button>
           </form>
 
           <div className="mt-6 p-4 bg-muted rounded-lg">
-            <p className="text-xs text-muted-foreground text-center">
-              ⚠️ Este panel es solo para administradores autorizados. El acceso no autorizado está
-              prohibido.
-            </p>
+            <p className="text-xs text-muted-foreground text-center">{text.warning}</p>
           </div>
         </CardContent>
       </Card>

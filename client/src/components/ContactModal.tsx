@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import EmailBuilder from "./EmailBuilder";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ContactModalProps {
   open: boolean;
@@ -20,21 +20,49 @@ const EMAIL = "office@pa-ers-industry.com";
 
 export default function ContactModal({ open, onOpenChange }: ContactModalProps) {
   const [showEmailBuilder, setShowEmailBuilder] = useState(false);
+  const { language } = useLanguage();
+
+  const copy = {
+    en: {
+      builderTitle: "Build a Custom Email",
+      builderBody: "We will guide you to create the perfect email",
+      modalTitle: "Contact Us",
+      modalBody: "Choose how you prefer to reach us",
+      call: "Call",
+      buildEmail: "Build Email",
+      buildEmailBody: "We help you draft your email",
+      directEmail: "Send Direct Email",
+      footer: "We will respond as soon as possible",
+    },
+    es: {
+      builderTitle: "Construir Email Personalizado",
+      builderBody: "Te guiaremos para crear el email perfecto",
+      modalTitle: "Contactanos",
+      modalBody: "Elige como prefieres comunicarte con nosotros",
+      call: "Llamar",
+      buildEmail: "Construir Email",
+      buildEmailBody: "Te ayudamos a redactar tu email",
+      directEmail: "Enviar Email Directo",
+      footer: "Responderemos tu consulta lo antes posible",
+    },
+  };
+
+  const text = copy[language];
 
   if (showEmailBuilder) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Construir Email Personalizado</DialogTitle>
-            <DialogDescription>
-              Te guiaremos para crear el email perfecto
-            </DialogDescription>
+            <DialogTitle className="text-2xl">{text.builderTitle}</DialogTitle>
+            <DialogDescription>{text.builderBody}</DialogDescription>
           </DialogHeader>
-          <EmailBuilder onClose={() => {
-            setShowEmailBuilder(false);
-            onOpenChange(false);
-          }} />
+          <EmailBuilder
+            onClose={() => {
+              setShowEmailBuilder(false);
+              onOpenChange(false);
+            }}
+          />
         </DialogContent>
       </Dialog>
     );
@@ -44,10 +72,8 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Contáctanos</DialogTitle>
-          <DialogDescription>
-            Elige cómo prefieres comunicarte con nosotros
-          </DialogDescription>
+          <DialogTitle className="text-2xl">{text.modalTitle}</DialogTitle>
+          <DialogDescription>{text.modalBody}</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-3 py-4">
@@ -60,7 +86,7 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
               <Phone className="h-5 w-5" />
             </div>
             <div className="flex-1 text-left">
-              <p className="font-semibold">Llamar</p>
+              <p className="font-semibold">{text.call}</p>
               <p className="text-sm text-muted-foreground group-hover:text-primary-foreground/80">
                 630-538-4741
               </p>
@@ -76,9 +102,9 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
               <MessageSquare className="h-5 w-5" />
             </div>
             <div className="flex-1 text-left">
-              <p className="font-semibold">Construir Email</p>
+              <p className="font-semibold">{text.buildEmail}</p>
               <p className="text-sm text-muted-foreground group-hover:text-primary-foreground/80">
-                Te ayudamos a redactar tu email
+                {text.buildEmailBody}
               </p>
             </div>
           </button>
@@ -92,7 +118,7 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
               <Mail className="h-5 w-5" />
             </div>
             <div className="flex-1 text-left">
-              <p className="font-semibold">Enviar Email Directo</p>
+              <p className="font-semibold">{text.directEmail}</p>
               <p className="text-sm text-muted-foreground group-hover:text-primary-foreground/80 break-all">
                 {EMAIL}
               </p>
@@ -100,9 +126,7 @@ export default function ContactModal({ open, onOpenChange }: ContactModalProps) 
           </a>
         </div>
 
-        <p className="text-center text-sm text-muted-foreground pt-2">
-          Responderemos tu consulta lo antes posible
-        </p>
+        <p className="text-center text-sm text-muted-foreground pt-2">{text.footer}</p>
       </DialogContent>
     </Dialog>
   );
