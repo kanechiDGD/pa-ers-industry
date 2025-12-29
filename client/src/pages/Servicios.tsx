@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +24,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Servicios() {
   const { language } = useLanguage();
+  
+  const seoTitle = language === 'es' ? 'Servicios' : 'Services';
+  const seoDescription = language === 'es'
+    ? 'Servicios profesionales de ajuste público para reclamos de seguros. Evaluación experta de daños por agua, incendio, tormentas y más.'
+    : 'Professional public adjuster services for insurance claims. Expert evaluation of water, fire, storm damage and more.';
   const [, navigate] = useLocation();
   const [formData, setFormData] = useState({
     name: "",
@@ -384,8 +390,14 @@ export default function Servicios() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
+      <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        url="https://paers.com/servicios"
+      />
+      <div className="min-h-screen flex flex-col">
+        <Header />
 
       <main className="flex-1 py-12">
         <div className="container">
@@ -533,5 +545,6 @@ export default function Servicios() {
 
       <Footer />
     </div>
+    </>
   );
 }

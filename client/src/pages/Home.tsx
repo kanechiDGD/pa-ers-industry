@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "@/components/SEO";
 import {
   MessageCircle,
   Shield,
@@ -23,6 +24,14 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Home() {
   const { language } = useLanguage();
+  
+  const seoTitle = language === 'es' 
+    ? 'Inicio - Expertos en Reclamos de Seguros'
+    : 'Home - Insurance Claim Experts';
+  
+  const seoDescription = language === 'es'
+    ? 'PA & ERS - Ajustadores públicos certificados que maximizan tu compensación por daños de agua, incendio, tormentas y más. Consulta gratuita y anónima. Protegemos tus derechos.'
+    : 'PA & ERS - Certified public adjusters maximizing your compensation for water, fire, storm, and interior damage. Free anonymous consultation. Protecting your rights.';
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [selectedDamageType, setSelectedDamageType] = useState<string | null>(null);
   const [damageModalOpen, setDamageModalOpen] = useState(false);
@@ -400,8 +409,14 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
+      <SEO 
+        title={seoTitle}
+        description={seoDescription}
+        url="https://paers.com/"
+      />
+      <div className="min-h-screen flex flex-col">
+        <Header />
 
       {/* Hero Section */}
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
@@ -457,7 +472,10 @@ export default function Home() {
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={service.image}
-                      alt={service.title}
+                      alt={`${service.title} - PA & ERS Insurance Claim Services`}
+                      loading="lazy"
+                      width="400"
+                      height="300"
                       className="w-full h-full object-cover hover:scale-105 transition-transform"
                     />
                     <div className="absolute inset-0 bg-black/40" />
@@ -622,7 +640,10 @@ export default function Home() {
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={caseStudy.image}
-                    alt={caseStudy.title}
+                    alt={`${caseStudy.title} - PA & ERS Success Story`}
+                    loading="lazy"
+                    width="600"
+                    height="400"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-black/40" />
@@ -720,9 +741,9 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
-
+       <Footer />
       <ContactModal open={contactModalOpen} onOpenChange={setContactModalOpen} />
     </div>
+    </>
   );
 }

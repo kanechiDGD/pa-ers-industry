@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Home Page -->
+  <url>
+    <loc>https://paers.com/</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/"/>
+  </url>
+  
+  <!-- Services Page -->
+  <url>
+    <loc>https://paers.com/servicios</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/servicios"/>
+  </url>
+  
+  <!-- About Us Page -->
+  <url>
+    <loc>https://paers.com/sobre-nosotros</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/sobre-nosotros"/>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://paers.com/contacto</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/contacto"/>
+  </url>
+  
+  <!-- Projects Page -->
+  <url>
+    <loc>https://paers.com/proyectos</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/proyectos"/>
+  </url>
+  
+  <!-- Track Case Page -->
+  <url>
+    <loc>https://paers.com/track-case</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Privacy Policy - English -->
+  <url>
+    <loc>https://paers.com/privacy-policy-en</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/privacy-policy-en"/>
+  </url>
+  
+  <!-- Privacy Policy - Spanish -->
+  <url>
+    <loc>https://paers.com/privacy-policy-es</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/privacy-policy-es"/>
+  </url>
+  
+  <!-- Terms - English -->
+  <url>
+    <loc>https://paers.com/terms-en</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/terms-en"/>
+  </url>
+  
+  <!-- Terms - Spanish -->
+  <url>
+    <loc>https://paers.com/terms-es</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/terms-es"/>
+  </url>
+  
+  <!-- Legal Notice - English -->
+  <url>
+    <loc>https://paers.com/legal-notice-en</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/legal-notice-en"/>
+  </url>
+  
+  <!-- Legal Notice - Spanish -->
+  <url>
+    <loc>https://paers.com/legal-notice-es</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/legal-notice-es"/>
+  </url>
+  
+</urlset>
