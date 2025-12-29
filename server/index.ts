@@ -22,6 +22,18 @@ async function startServer() {
 
   app.use(express.static(staticPath));
 
+  // Serve sitemap.xml with correct content-type
+  app.get("/sitemap.xml", (_req, res) => {
+    res.type("application/xml");
+    res.sendFile(path.join(staticPath, "sitemap.xml"));
+  });
+
+  // Serve robots.txt with correct content-type
+  app.get("/robots.txt", (_req, res) => {
+    res.type("text/plain");
+    res.sendFile(path.join(staticPath, "robots.txt"));
+  });
+
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
