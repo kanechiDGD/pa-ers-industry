@@ -4,53 +4,53 @@
   
   <!-- Home Page -->
   <url>
-    <loc>https://paers.com/</loc>
+    <loc>https://pa-ers-industry.com/</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pa-ers-industry.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/"/>
   </url>
   
   <!-- Services Page -->
   <url>
-    <loc>https://paers.com/servicios</loc>
+    <loc>https://pa-ers-industry.com/servicios</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/servicios"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/servicios"/>
   </url>
   
   <!-- About Us Page -->
   <url>
-    <loc>https://paers.com/sobre-nosotros</loc>
+    <loc>https://pa-ers-industry.com/sobre-nosotros</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/sobre-nosotros"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/sobre-nosotros"/>
   </url>
   
   <!-- Contact Page -->
   <url>
-    <loc>https://paers.com/contacto</loc>
+    <loc>https://pa-ers-industry.com/contacto</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/contacto"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/contacto"/>
   </url>
   
   <!-- Projects Page -->
   <url>
-    <loc>https://paers.com/proyectos</loc>
+    <loc>https://pa-ers-industry.com/proyectos</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/proyectos"/>
   </url>
   
   <!-- Track Case Page -->
   <url>
-    <loc>https://paers.com/track-case</loc>
+    <loc>https://pa-ers-industry.com/track-case</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
@@ -58,56 +58,56 @@
   
   <!-- Privacy Policy - English -->
   <url>
-    <loc>https://paers.com/privacy-policy-en</loc>
+    <loc>https://pa-ers-industry.com/privacy-policy-en</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/privacy-policy-en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pa-ers-industry.com/privacy-policy-en"/>
   </url>
   
   <!-- Privacy Policy - Spanish -->
   <url>
-    <loc>https://paers.com/privacy-policy-es</loc>
+    <loc>https://pa-ers-industry.com/privacy-policy-es</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/privacy-policy-es"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/privacy-policy-es"/>
   </url>
   
   <!-- Terms - English -->
   <url>
-    <loc>https://paers.com/terms-en</loc>
+    <loc>https://pa-ers-industry.com/terms-en</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/terms-en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pa-ers-industry.com/terms-en"/>
   </url>
   
   <!-- Terms - Spanish -->
   <url>
-    <loc>https://paers.com/terms-es</loc>
+    <loc>https://pa-ers-industry.com/terms-es</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/terms-es"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/terms-es"/>
   </url>
   
   <!-- Legal Notice - English -->
   <url>
-    <loc>https://paers.com/legal-notice-en</loc>
+    <loc>https://pa-ers-industry.com/legal-notice-en</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://paers.com/legal-notice-en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pa-ers-industry.com/legal-notice-en"/>
   </url>
   
   <!-- Legal Notice - Spanish -->
   <url>
-    <loc>https://paers.com/legal-notice-es</loc>
+    <loc>https://pa-ers-industry.com/legal-notice-es</loc>
     <lastmod>2024-12-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://paers.com/legal-notice-es"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pa-ers-industry.com/legal-notice-es"/>
   </url>
   
 </urlset>
